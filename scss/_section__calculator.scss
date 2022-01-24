@@ -173,6 +173,16 @@
     font-size: 20px;
     font-weight: bold;
 }
+.price__block-change:hover{
+    background: #522E79;
+    color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 32, 51, 0.04), 0px 8px 24px rgba(0, 32, 51, 0.12);
+}
+.price__block-change:active{
+    background: #522E79;
+    color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 32, 51, 0.04), 0px 8px 24px rgba(0, 32, 51, 0.12);
+}
 
 .price__text {
     font-weight: 600;
