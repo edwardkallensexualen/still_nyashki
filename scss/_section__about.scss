@@ -1,0 +1,118 @@
+.section__about {
+    padding: 127px 0 118px 0;
+    font-family: Segoe UI;
+    font-style: normal;
+}
+.about__title {
+    width: 581px;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 130%;
+    color: #002033;
+    margin-bottom: 40px;
+}
+.about__card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.about__text {
+
+    & h3{
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 120%;
+        color: #E02348;
+        margin-bottom: 16px;
+    }
+    & p{
+        width: 490px;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 145%;
+        color: #002033;
+    }
+    & span{
+        font-weight: 700;
+    }
+}
+.about__image {
+    width: 468px;
+    height: 350px;
+    position: relative;
+
+    & img:first-child{
+        width: 100%;
+        height: 100%;
+    }
+}
+.about__card-position {
+    position: absolute;
+    bottom: -55px;
+    right: -100px;
+}
+.position-left{
+    right: 0;
+}
+
+@media (max-width: 1200px) {
+    .about__card {
+        justify-content: flex-start;
+        flex-direction: column;
+        width: 100%;
+    }
+    .about__title {
+        width: 100%;
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+    .about__text{
+        p {
+            width: 100%;
+            margin-bottom: 32px;
+        }
+    }
+    .about__image{
+        margin-bottom: 45px;
+    }
+    .about__image-order{
+        order: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .section__about{
+        padding: 48px 0 64px 0;
+    }
+    .about__image{
+        height: 230px;
+    }
+    .about__text {
+        & h3{
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        & p{
+            width: 100%;
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .about__image{
+        width: 100%;
+        height: 100%;
+        padding: 0 10px;
+    }
+    .about__card-position {
+        right: -50px;
+    }
+    .position-left{
+        right: 0;
+    }
+    .section__about {
+        padding: 48px 0 60px 0;
+    }
+}

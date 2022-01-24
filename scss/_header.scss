@@ -1,0 +1,215 @@
+.wrapper {
+}
+header{
+    background: #F4F3EF;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+header::before{
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 66px;
+    top: 0;
+    left: 0;
+    background-color: #F4F3EF;
+    z-index: 3;
+}
+.inner__back {
+}
+.header {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+.header__logo {
+    flex-basis: 340px;
+    position: relative;
+    z-index: 3;
+}
+.header__burger {
+    display: none;
+}
+.header__menu {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 120%;
+    width: 100%;
+}
+.menu__list {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & li{
+        white-space: nowrap;
+    }
+}
+.menu__link {
+    color: #002033;
+}
+.menu__link:hover{
+    padding-bottom: 2px;
+    border-bottom: 2px solid #522E79;
+}
+.header__contact {
+    font-family: Inter;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 120%;
+    text-align: right;
+    flex-basis: 290px;
+
+    & a:first-child{
+        color: #002033;
+        font-weight: bold;
+    }
+    & p:last-child{
+        font-weight: normal;
+        color: #828282;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 1200px) {
+    .header__logo{
+        flex-basis: 275px;
+    }
+    .header__contact{
+        flex-basis: 190px;
+    }
+}
+
+@media (max-width: 992px) {
+    .header__logo{
+        flex-basis: 180px;
+
+        & img{
+            width: 120px;
+            height: 38px;
+        }
+    }
+    .header__menu{
+        font-size: 14px;
+    }
+    .header__contact{
+        flex-basis: initial;
+        font-size: 12px;
+
+        & p:first-child{
+            margin-bottom: 2px;
+        }
+
+        & p span{
+            display: block;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .header__logo{
+        flex: 1 1 auto;
+    }
+    .header__burger {
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #FFFFFF;
+        position: relative;
+        z-index: 3;
+    }
+    .header__burger::before,
+    .header__burger::after{
+        content: '';
+        width: 20px;
+        height: 2px;
+        background: #424242;
+        position: absolute;
+        left: 10px;
+        border-radius: 2px;
+        transition: all 0.3s ease 0s;
+    }
+    .header__burger::before{
+        top: 12px;
+    }
+    .header__burger::after{
+        bottom: 12px;
+    }
+    .header__burger span{
+        width: 20px;
+        height: 2px;
+        background: #424242;
+        position: absolute;
+        left: 10px;
+        top: 19px;
+        border-radius: 2px;
+        transition: all 0.3s ease 0s;
+    }
+    .header__burger.active span{
+        transform: rotate(45deg);
+    }
+    .header__burger.active::before{
+        transform: rotate(-45deg);
+        top: 19px;
+    }
+    .header__burger.active::after{
+        transform: scale(0);
+    }
+    .header__menu{
+        font-size: 18px;
+        font-weight: 500;
+        display: block;
+        position: fixed;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #F4F3EF;
+        padding: 180px 0 40px 0;
+        transition: all 0.5s ease 0s;
+    }
+    .header__menu.active{
+        top: 0;
+    }
+    .menu__list{
+        flex-basis: initial;
+        flex-direction: column;
+        justify-content: initial;
+        align-items: center;
+        height: 100%;
+
+        & li{
+            margin-bottom: 40px;
+        }
+        & li:nth-child(4){
+            margin-bottom: 0;
+        }
+        & li:last-child{
+            margin: 0;
+        }
+    }
+    .header__contact{
+        font-size: 16px;
+        text-align: center;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        & p:first-child{
+            margin-bottom: 8px;
+        }
+        & p span{
+            display: inline;
+        }
+    }
+
+}
