@@ -70,3 +70,26 @@ img{vertical-align: top;}
 
 h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 /*--------------------*/
+button:hover{
+    background: #49296B;
+    box-shadow: 0px 4px 10px rgba(66, 34, 100, 0.3);
+}
+button:active{
+    background: #49296B;
+}
+input{
+    max-height: 66px;
+}
+input:hover{
+    border: 1px solid #828282;
+}
+input:focus{
+    border: 2px solid #828282;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    input{
+        max-height: 50px;
+    }
+}

@@ -71,7 +71,7 @@ footer{
         background: #522E79;
         border-radius: 8px;
         position: absolute;
-        top: 14px;
+        top: 10px;
         right: 8px;
         font-weight: 600;
         font-size: 16px;
@@ -136,6 +136,28 @@ footer{
             font-size: 14px;
         }
     }
+    .fotter__form{
+        max-width: 100%;
+
+        & input{
+            padding: 17px 160px 17px 16px;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        & input::placeholder{
+            font-size: 14px;
+        }
+
+        & button{
+            padding: 13px 16px;
+            top: 3px;
+            right: 4px;
+            font-size: 14px;
+        }
+    }
+    .form__text-center{
+        text-align: left;
+    }
 }
 
 @media (max-width: 576px) {
@@ -146,28 +168,6 @@ footer{
     .footer__subtitle{
         font-size: 14px;
         margin-bottom: 24px;
-    }
-    .fotter__form{
-        max-width: 100%;
-
-        & input{
-            padding: 17px 8px;
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-        & input::placeholder{
-            font-size: 14px;
-        }
-
-        & button{
-            padding: 14px 16px;
-            top: 3px;
-            right: 4px;
-            font-size: 14px;
-        }
-    }
-    .form__text-center{
-        text-align: left;
     }
 }
 

@@ -121,7 +121,7 @@
         background: #522E79;
         border-radius: 8px;
         position: absolute;
-        top: 14px;
+        top: 8px;
         right: 8px;
         font-weight: 600;
         font-size: 16px;
@@ -319,21 +319,18 @@
             margin-right: 0;
         }
     }
-}
-
-@media (max-width: 576px) {
     .video__form{
         max-width: 100%;
 
         & input{
-            padding: 17px 8px;
+            padding: 17px 160px 17px 16px;
             font-size: 14px;
             margin-bottom: 16px;
         }
 
         & button{
-            padding: 14px 16px;
-            top: 3px;
+            padding: 12px 16px;
+            top: 4px;
             right: 4px;
             font-size: 14px;
         }
@@ -342,3 +339,4 @@
         text-align: left;
     }
 }
+

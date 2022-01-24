@@ -123,7 +123,7 @@ main{
         background: #522E79;
         border-radius: 8px;
         position: absolute;
-        top: 11px;
+        top: 9px;
         right: 8px;
         font-weight: 600;
         font-size: 16px;
@@ -261,13 +261,13 @@ main{
     .main__form{
 
         & input{
-            padding: 17px 8px;
+            padding: 17px 160px 17px 16px;
             font-size: 14px;
             margin-bottom: 16px;
         }
 
         & button{
-            padding: 14px 16px;
+            padding: 13px 16px;
             top: 3px;
             right: 4px;
             font-size: 14px;
