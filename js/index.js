@@ -54,6 +54,12 @@ let pricePlus = document.querySelector('#price__plus');
 // прибыль = кол-во вещей * (среднюю цену которую выбрал человек - средняя закупка)
 let sumEnd = document.querySelector('.calc__summ-price');
 
+// получаем title над видео (номер товара)
+let blockTitle = document.querySelector('.block__title');
+
+// получаем ссылку под калькулятором
+let numberProductLink = document.querySelector('.calc__link');
+
 
 let xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://nomadbylife.pythonanywhere.com/api-auth/all_product/')
@@ -65,12 +71,14 @@ xhr.onload = function (){
         let a = xhr.response;
         a = JSON.parse(a);
         arrDataProduct = a;
+        console.log(arrDataProduct)
         // функция showItem (на событие клика по конкретному item в списке)
         function showItem(e){
             let dataId = e.target.getAttribute('data_id');
             for(let i of arrDataProduct){
                 if(dataId == i.id){
                     firstLi.innerHTML = `${i.title}`;
+                    numberProductLink.setAttribute('data-numberVideo', `${i.number_product}`);
                     calcItemMass.innerHTML = `${i.massa} кг`;
                     calcItemCost.innerHTML = `${i.avg_price} BYN`;
                     priceText.innerHTML = `${i.avg_price}`;
@@ -98,6 +106,7 @@ xhr.onload = function (){
             let liFirstAppend = document.createElement('li');
             liFirstAppend.setAttribute('data_id', `${arrDataProduct[0].id}`);
             liFirstAppend.innerHTML = `${arrDataProduct[0].title}`;
+            numberProductLink.setAttribute('data-numberVideo', `${arrDataProduct[0].number_product}`);
             liFirstAppend.addEventListener('click', showItem);
             listChoiceItem.prepend(liFirstAppend);
         }
@@ -131,177 +140,212 @@ xhr.onload = function (){
 };
 
 
+// слайдер //
+let iframeCarousel = document.querySelector('#iframeCarousel');
+
+let videoCarousel = document.querySelector('.video__carousel');
+
+function slider(){
+    fetch('https://nomadbylife.pythonanywhere.com/api-auth/all_video/')
+    .then(response => response.json())
+    .then(allvideo => {
+        console.log(allvideo)
+        let allVideoCount = 0;
+        for(let i of allvideo){
+            if(i.url[0] != undefined){
+                videoCarousel.innerHTML += `<div class="caroules__item" data-video="2">
+                <img src="https://nomadbylife.pythonanywhere.com/${i.url[0].image}" data-numberProduct='${i.number_product}' data-urlVideo='${i.url[0].url}' class="carousel__img" alt="" id='${i.id}' data-id='${allVideoCount}'">
+                </div>`;
+            }
+            allVideoCount++;
+        }
+        function addEventImg(){
+            let carouselImg = document.querySelectorAll('.carousel__img');
+            for(let i of carouselImg){
+                i.addEventListener('click', (e) => {
+                    console.log('Кликнул на IMG');
+                    slideCurrent(e.target.id, e)
+                })
+            }
+        }
+
+        addEventImg();
+
+        numberProductLink.addEventListener('click', setVideoLink);
+
+        function setVideoLink(){
+            let number = numberProductLink.getAttribute('data-numberVideo');
+            
+            itemsImg.forEach(item => {
+                if(item.getAttribute('data-numberproduct') == number){
+                    iframeCarousel.src = item.getAttribute('data-urlvideo');
+                    blockTitle.innerHTML = `Товар №${item.getAttribute('data-numberproduct')}`;
+                    counter = item.getAttribute('data-id');
+                    itemsImg.forEach(item => item.getAttribute('data-id') != counter ? item.classList.remove('imgBorder') : item.classList.add('imgBorder'));
+                    blockTitle.innerHTML = `Товар №${itemsImg[counter].getAttribute('data-numberproduct')}`;
+                    
+
+                    position = -itemWidth * counter;
+                    setPosition(position);
+                }
+            })
+        }
+
+
+
+        // карусель //
+        
+        let position = 0;
+        let slidersToShow = 7;
+        let counter = 0;
+
+        if(window.innerWidth < 540){
+            slidersToShow = 5;
+        }
+
+        const slidersToScroll = 1;
+        const container = document.querySelector('.carousel');
+        const track = document.querySelector('.video__carousel');
+        const btnPrev = document.querySelector('#buttonLeft');
+        const btnNext = document.querySelector('#buttonRight');
+        const items = document.querySelectorAll('.caroules__item');
+        const itemsImg = document.querySelectorAll('.caroules__item img');
+        const itemCount = items.length;
+        const itemWidth = container.clientWidth / slidersToShow;
+        const movePosition = slidersToScroll * itemWidth;
+
+        itemsImg[0].classList.add('imgBorder');
+        iframeCarousel.src = itemsImg[0].getAttribute('data-urlvideo');
+        blockTitle.innerHTML = `Товар №${itemsImg[0].getAttribute('data-numberproduct')}`
+
+        items.forEach((item) => {
+            item.addEventListener('click', setUrlItem);
+            item.style.minWidth = `${itemWidth}px`;
+        });
+
+        function setUrlItem(e){
+            iframeCarousel.src = e.target.getAttribute('data-urlvideo');
+            blockTitle.innerHTML = `Товар №${e.target.getAttribute('data-numberproduct')}`;
+
+            counter = e.target.getAttribute('data-id');
+            itemsImg.forEach(item => item.getAttribute('data-id') != counter ? item.classList.remove('imgBorder') : item.classList.add('imgBorder'));
+            blockTitle.innerHTML = `Товар №${itemsImg[counter].getAttribute('data-numberproduct')}`
+        }
+        
+        btnNext.addEventListener('click', () => {
+            if(counter != itemsImg.length - 1){
+                counter++
+                itemsImg.forEach(item => item.getAttribute('data-id') != counter ? item.classList.remove('imgBorder') : item.classList.add('imgBorder'));
+                iframeCarousel.src = itemsImg[counter].getAttribute('data-urlvideo');
+                blockTitle.innerHTML = `Товар №${itemsImg[counter].getAttribute('data-numberproduct')}`
+            } else{
+                counter = itemsImg.length - 1;
+            }
+
+            const itemsLeft = itemCount - (Math.abs(position) + slidersToShow * itemWidth) / itemWidth;
+
+            position -= itemsLeft >= slidersToScroll ? movePosition : itemsLeft * itemWidth;
+        
+            setPosition();
+            checkBtns();
+        });
+        
+        btnPrev.addEventListener('click', () => {
+            if(counter != 0){
+                counter--
+                itemsImg.forEach(item => item.getAttribute('data-id') != counter ? item.classList.remove('imgBorder') : item.classList.add('imgBorder'));
+                iframeCarousel.src = itemsImg[counter].getAttribute('data-urlvideo');
+                blockTitle.innerHTML = `Товар №${itemsImg[counter].getAttribute('data-numberproduct')}`
+            } else{
+                counter = 0;
+            }
+
+
+            const itemsLeft = Math.abs(position) / itemWidth;
+        
+            position += itemsLeft >= slidersToScroll ? movePosition : itemsLeft * itemWidth;
+        
+            setPosition();
+            checkBtns();
+        });
+        
+        const setPosition = () => {
+            track.style.transform = `translateX(${position}px)`;
+        };
+        
+        const checkBtns = () => {
+            btnPrev.disabled = position === 0;
+            btnNext.disabled = position <= - (itemCount - slidersToShow) * itemWidth;
+        };
+        // ----------------------------------- //
 
 
 
 
 
+        // let videoButtonLeft = document.querySelector('#buttonLeft');
+        //     videoButtonLeft.addEventListener('click', prevVideo);
 
+        // let videoButtonRight = document.querySelector('#buttonRight');
+        //     videoButtonRight.addEventListener('click', nextVideo);
 
+        // let arrVideo = document.querySelectorAll('.carousel__img');
+        //     iframeCarousel.src = arrVideo[0].getAttribute('data-urlVideo');
+        //     arrVideo[0].classList.add('imgBorder');
+        //     blockTitle.textContent = `Товар №${arrVideo[0].getAttribute('data-numberProduct')}`;
 
+        // function nextVideo(e){
+        //     if(e.target.id == 'next' || e.target.id == 'buttonRight'){
+        //         slideNext()
+        //     }
+        // }
+        
+        // function prevVideo(e){
+        //     if(e.target.id == 'prev' || e.target.id == 'buttonLeft'){
+        //         slidePrev()
+        //     }
+        // }
 
+        // function slideNext(){
+        //     if(slideIndex == arrVideo.length){
+        //         videoButtonRight.disabled = true;
+        //         videoButtonLeft.disabled = false;
+        //     } else{
+        //         slideShow(slideIndex += 1)
+        //     }
+        // }
+        // function slidePrev(){
+        //     if(slideIndex == 0){
+        //         videoButtonLeft.disabled = true;
+        //         videoButtonRight.disabled = false;
+        //     } else{
+        //         slideShow(slideIndex -= 1)
+        //     }
+        // }
+        // function slideCurrent(n){
+        //     slideShow(slideIndex = n)
+        // }
+        
+        // function slideShow(n, e){
+        //     // if(n > arrVideo.length){
+        //     //     slideIndex = 1
+        //     // }
+        //     // if(n < 1){
+        //     //     slideIndex = arrVideo.length
+        //     // }
+        //     iframeCarousel.src = arrVideo[n].getAttribute('data-urlVideo');
+        //     for(let i of arrVideo){
+        //         if(n != arrVideo.length){
+        //             if(i.id != n){
+        //                 i.classList.remove('imgBorder')
+        //             } else{
+        //                 blockTitle.textContent = `Товар №${i.getAttribute('data-numberProduct')}`;
+        //                 i.classList.add('imgBorder')
+        //             }
+        //         }
+        //     }
+        // }
+    })
+}
 
-
-
-
-
-
-
-// получим объект списка и вставим их
-// function getListChoice(){
-//     const listProduct = fetch('https://nomadbylife.pythonanywhere.com/api-auth/product/')
-//                             .then((response) => response.json())
-//                             .then((product) => {
-//                                 let listChoiceItem = document.querySelector('.calc__list-items');
-//                                 let listChoice = document.querySelector('.calc__list-choice');
-//                                     listChoice.addEventListener('click', (e) => {
-//                                     listChoice.classList.toggle('show-menu');
-//                                     listChoiceItem.classList.toggle('show-menu');
-//                                     if(e.target.classList == 'calc__list'){
-//                                         console.log(111);
-//                                     } else{
-//                                         let itemChoice = e.target;
-//                                         li.textContent = itemChoice.textContent;
-//                                     }
-//                                 });
-//                                 let li = document.createElement('li');
-//                                 for(let i of product){
-//                                     if(i.id == 1){
-//                                         li.innerHTML = product[0].title;
-//                                         li.className = 'calc__list';
-//                                         li.setAttribute('data-id', `${i.id}`);
-//                                         listChoice.prepend(li);
-//                                     } else{
-//                                         let itemLi = document.createElement('li');
-//                                         itemLi.innerHTML += i.title;
-//                                         itemLi.setAttribute('data-id', `${i.id}`);
-//                                         listChoiceItem.append(itemLi);
-//                                     }
-//                                 }
-                                
-//         let priceText = document.querySelector('.price__text');
-//         let arrItemLi = document.querySelectorAll('[data-id]');
-//             for(let i of arrItemLi){
-//                 i.addEventListener('click', (e) => (
-//                         fetch(`https://nomadbylife.pythonanywhere.com/api-auth/product/${e.target.getAttribute('data-id')}`)
-//                         .then((response) => response.json())
-//                         .then((item) => {
-//                             i.setAttribute('data-massa', `${item[0].massa}`);
-//                             i.setAttribute('data-avg-price', `${item[0]['avg_price']}`);
-//                             i.setAttribute('data-stock-in-bag', `${item[0]['stock_in_bag']}`);
-//                             let calcItemMass = document.querySelector('#calc__item-mass');
-//                             let calcItemCost = document.querySelector('#calc__item-cost');
-//                                 calcItemCost.innerHTML = `${i.getAttribute('data-massa')} BYN`;
-//                                 calcItemMass.innerHTML = `${i.getAttribute('data-stock-in-bag')} КГ`;
-//                                 priceText.innerHTML = `${i.getAttribute('data-avg-price')}`;
-//                     })
-//                 ))
-//             }
-//     })
-// }
-// getListChoice()
-
-
-
-
-
-
-
-
-///////////////////////// Запросы на AndPoint 
-
-// let minus = document.querySelector('#price__minus');
-//     minus.addEventListener('click', countCost);
-// let plus = document.querySelector('#price__plus');
-//     plus.addEventListener('click', countCost);
-
-// function countCost(e){
-//     let priceText = document.querySelector('.price__text');
-//         console.log(priceText)
-//     let priceTextValue = Number(priceText.innerHTML);
-//     let dataAttributeBag = document.querySelector('#calc__item-mass');
-//     let countThingInBag = Number(dataAttributeBag.getAttribute('data'));
-//     let calcSumm = document.querySelector('.calc__summ-price');
-//     let calcItemCost = document.querySelector('#calc__item-cost');
-//     let calcItemCostNum = Number(calcItemCost.getAttribute('data-avg-price'));
-
-//     if(e.target.id == 'price__minus'){
-//         if(priceTextValue > 1){
-//             priceTextValue = priceTextValue - 1;
-//             priceText.innerHTML = `${priceTextValue}`;
-//             let inCome = +countThingInBag * (+priceTextValue - +calcItemCostNum);
-//                 calcSumm.innerHTML = `${parseInt(inCome)} BYN`;
-//                 console.log(countThingInBag, priceTextValue, calcItemCostNum)
-//             // прибыль = кол-во вещей * (среднюю цену которую выбрал человек - средняя закупка)
-//         }
-//     } else{
-//         priceTextValue = priceTextValue + 1;
-//         priceText.innerHTML = `${priceTextValue}`;
-//         let inCome = +countThingInBag * (+priceTextValue - +calcItemCostNum);
-//         calcSumm.innerHTML = `${parseInt(inCome)} BYN`;
-//     }
-// }
-
-// function getListChoice(){
-//     const listProduct = fetch('https://nomadbylife.pythonanywhere.com/api-auth/product/')
-//                             .then((response) => response.json())
-//                             .then((product) => {
-//                                 let listChoiceItem = document.querySelector('.calc__list-items');
-//                                 let listChoice = document.querySelector('.calc__list-choice');
-//                                     listChoice.addEventListener('click', () => {
-//                                         listChoice.classList.toggle('show-menu');
-//                                         listChoiceItem.classList.toggle('show-menu');
-//                                     });
-//                                     for(let i of product){
-//                                         if(i.id == 1){
-//                                             let li = document.createElement('li');
-//                                                 li.innerHTML = product[0].title;
-//                                                 li.setAttribute('data', `${i.id}`)
-//                                                 //li.id = `list__${product[0].id}`;
-//                                                 listChoice.prepend(li);
-//                                         } else{
-//                                             let liItem = document.createElement('li');
-//                                                 liItem.innerHTML = i.title;
-//                                                 liItem.setAttribute('data', `${i.id}`);
-//                                                 //liItem.id = `list__${i.id}`;
-//                                                 liItem.addEventListener('click', getItemChoice);
-//                                             listChoiceItem.append(liItem);
-//                                         }
-//                                     }
-//                             });
-// }
-// getListChoice();
-
-// получаем объект из списка (сам элемент) и заполняем калькулятор
-// function getItemChoice(e){
-//     let itemAttribute = e.target.getAttribute('data');
-//     let calcItemMass = document.querySelector('#calc__item-mass');
-//     let calcItemCost = document.querySelector('#calc__item-cost');
-//     fetch(`https://nomadbylife.pythonanywhere.com/api-auth/product/${itemAttribute}`)
-//         .then((response) => response.json())
-//         .then((product) => {
-//             calcItemMass.setAttribute('data', `${product[0].stock_in_bag}`)
-//             calcItemCost.setAttribute('data-avg-price', `${product[0].avg_price}`)
-//             calcItemCost.innerHTML = `${product[0].avg_price} BYN`;
-//             calcItemMass.innerHTML = `${product[0].massa} КГ`;
-//         })
-// }
-
-// let dataArr = [];
-// let xhr = new XMLHttpRequest();
-//     xhr.open('GET', 'https://nomadbylife.pythonanywhere.com/api-auth/product/1')
-//     // xhr.responseType = 'json'
-//     // xhr.setRequestHeader('Content-Type', 'application/json')
-//     xhr.send()
-//     xhr.onload = function (){
-//         if(xhr.status != 200){
-//             // console.log(111, xhr.statusText);
-//         } else{
-//             // console.log(xhr.response);
-//             let a = xhr.response;
-//             a = JSON.parse(a);
-//             dataArr.push(a);
-//         }
-//     };
-
-// console.log(dataArr)
+slider();

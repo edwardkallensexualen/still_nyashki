@@ -6,6 +6,10 @@
     flex-direction: column;
     align-items: center;
 }
+.imgBorder{
+    border: 2px solid red;
+    border-radius: 9px;
+}
 .video__title {
     width: 700px;
     font-weight: bold;
@@ -20,7 +24,8 @@
     }
 }
 .video__block {
-    max-width: 770px;
+    width: 770px;
+    //flex-basis: 770px;
     margin-bottom: 50px;
 }
 .block__title {
@@ -48,11 +53,26 @@
     position: absolute;
     top: 56%;
     transform: translateY(-50%);
-    background: #FFFFFF;
     z-index: 1;
 }
 .slider__button-left {
     left: -100px;
+    background: #FFFFFF url(../img/slider_button-left.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover{
+        background: #49296B url(../img/slider_button-left-white.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        box-shadow: 0px 4px 10px rgba(66, 34, 100, 0.3);
+    }
+
+    &:active{
+        background: #49296B url(../img/slider_button-left-white.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+    }
 }
 .video__player {
     position: relative;
@@ -85,17 +105,37 @@
 }
 .slider__button-right {
     right: -100px;
+    background: #FFFFFF url(../img/slider_button-right.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover{
+        background: #49296B url(../img/slider_button-right-white.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        box-shadow: 0px 4px 10px rgba(66, 34, 100, 0.3);
+    }
+
+    &:active{
+        background: #49296B url(../img/slider_button-right-white.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+    }
 }
 .carousel{
-    width: 100%;
     overflow: hidden;
 }
 .video__carousel {
     display: flex;
     justify-content: space-between;
 }
+.caroules__item{
+    height: 96px;
+    cursor: pointer;
+    border-radius: 9px;
+}
 .carousel__img{
-    width: 100%;
+    width: 95%;
     height: 100%;
 }
 .video__form {
@@ -215,10 +255,12 @@
     .video__body{
         width: 100%;
     }
+    .video__block{
+        width: 670px;
+    }
     .video__player{
         width: 100%;
-        height: 100%;
-        padding-top: 56%;
+        height: 380px;
 
         & img{
             position: absolute;
@@ -250,8 +292,15 @@
         margin-bottom: 20px;
     }
     .video__block {
-        max-width: 90%;
+        // max-width: 90%;
+        width: 90%;
         margin-bottom: 50px;
+    }
+    .video__player{
+        height: 280px;
+    }
+    .caroules__item{
+        height: 67px;
     }
     .block__title {
         margin-bottom: 4px;
@@ -340,3 +389,8 @@
     }
 }
 
+@media (max-width: 540px) {
+    .video__player{
+        height: 180px;
+    }
+}
