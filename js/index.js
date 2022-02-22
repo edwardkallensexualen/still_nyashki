@@ -269,56 +269,56 @@ function slider(){
 
 slider();
 
-let buttons = document.querySelectorAll('button');
-    for(let button of buttons){
-        if(!button.classList.contains('modal__button')){
-            button.addEventListener('click', validPhone);
-        }
-    }
+// let buttons = document.querySelectorAll('button');
+//     for(let button of buttons){
+//         if(!button.classList.contains('modal__button')){
+//             button.addEventListener('click', validPhone);
+//         }
+//     }
 
-const popup = document.querySelector('.popup');
-const wrapper = document.querySelector('.wrapper');
-let formText;
+// const popup = document.querySelector('.popup');
+// const wrapper = document.querySelector('.wrapper');
+// let formText;
 
-function validPhone(event) {
-    event.preventDefault();
-    var re = /^((80|\+375)?)(25|33|44|29)(\d{7})$/;
-    var myPhone = event.target.previousElementSibling.value; 
-    var valid = re.test(myPhone); 
-    if (valid){
-        popup.style.display = 'block';
-        wrapper.classList.add('popup');
-        wrapper.style.display = 'block';
-        document.body.classList.add('active-hidden');
-        let form = event.target.parentNode;
-        fetch('https://nomadbylife.pythonanywhere.com/contact/', {
-            method: 'POST',
-            body: new FormData(form),
-        }).then(response => {
-            console.log(response.status);
-        })
-        event.target.previousElementSibling.value = '';
-    } else{
-        let formTextRed = event.target.nextElementSibling;
-            formTextRed.innerHTML = 'Введите корректный номер в формате +375 (_ _) _ _ _-_ _-_ _';
-            formTextRed.classList.add('form__text-red');
-            formText = formTextRed;
-            event.target.previousElementSibling.value = '';
-    }
-    return formText
-}
+// function validPhone(event) {
+//     event.preventDefault();
+//     var re = /^((80|\+375)?)(25|33|44|29)(\d{7})$/;
+//     var myPhone = event.target.previousElementSibling.value; 
+//     var valid = re.test(myPhone); 
+//     if (valid){
+//         popup.style.display = 'block';
+//         wrapper.classList.add('popup');
+//         wrapper.style.display = 'block';
+//         document.body.classList.add('active-hidden');
+//         let form = event.target.parentNode;
+//         fetch('https://nomadbylife.pythonanywhere.com/contact/', {
+//             method: 'POST',
+//             body: new FormData(form),
+//         }).then(response => {
+//             console.log(response.status);
+//         })
+//         event.target.previousElementSibling.value = '';
+//     } else{
+//         let formTextRed = event.target.nextElementSibling;
+//             formTextRed.innerHTML = 'Введите корректный номер в формате +375 (_ _) _ _ _-_ _-_ _';
+//             formTextRed.classList.add('form__text-red');
+//             formText = formTextRed;
+//             event.target.previousElementSibling.value = '';
+//     }
+//     return formText
+// }
 
 
-const modalCross = document.querySelector('.modal__cross');
-    modalCross.addEventListener('click', closeModalWindow);
+// const modalCross = document.querySelector('.modal__cross');
+//     modalCross.addEventListener('click', closeModalWindow);
 
-const modalButton = document.querySelector('.modal__button');
-    modalButton.addEventListener('click', closeModalWindow);
+// const modalButton = document.querySelector('.modal__button');
+//     modalButton.addEventListener('click', closeModalWindow);
 
-function closeModalWindow(){
-    wrapper.classList.remove('popup');
-    popup.style.display = 'none';
-    document.body.classList.remove('active-hidden');
-    formText.innerHTML = 'Мы перезвоним вам в течение 15 минут, поделимся<br> опытом и ответим на все вопросы';
-    formText.classList.remove('form__text-red');
-}
+// function closeModalWindow(){
+//     wrapper.classList.remove('popup');
+//     popup.style.display = 'none';
+//     document.body.classList.remove('active-hidden');
+//     formText.innerHTML = 'Мы перезвоним вам в течение 15 минут, поделимся<br> опытом и ответим на все вопросы';
+//     formText.classList.remove('form__text-red');
+// }
