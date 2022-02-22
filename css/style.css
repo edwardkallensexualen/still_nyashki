@@ -3,7 +3,9 @@
   padding: 0 15px;
   margin: 0 auto;
 }
-
+.wrapper{
+  overflow: hidden;
+}
 .active-hidden {
   overflow: hidden;
 }
