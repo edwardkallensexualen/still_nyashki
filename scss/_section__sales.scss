@@ -125,6 +125,10 @@
     }
     .sales__form{
         flex-wrap: wrap;
+        & .form__text {
+            display: block;
+            width: 100%;
+        }
     }
 }
 

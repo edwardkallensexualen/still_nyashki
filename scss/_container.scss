@@ -3,6 +3,9 @@
     padding: 0 15px;
     margin: 0 auto;
 }
+.active-hidden{
+    overflow: hidden;
+}
 @media (max-width: 1300px) {
     .container{
         max-width: 1140px;

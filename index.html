@@ -48,6 +48,25 @@
             </div>
         </header>
         <main>
+            <section>
+                <div class="popup popup-fixed">
+                    <div class="container">
+                        <div class="popup__modal">
+                            <div class="modal__cross"></div>
+                            <div class="modal__image"></div>
+                            <div class="modal__title">
+                                Заявка отправлена
+                            </div>
+                            <div class="modal__text">
+                                Мы перезвоним вам в течение 15 минут, поделимся<br> опытом и ответим на все вопросы
+                            </div>
+                            <button class="modal__button">
+                                Понятно, спасибо
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section class="back">
                 <div class="container">
                     <div class="inner__back">
@@ -87,7 +106,7 @@
                                 <div class="main__item">
                                     Выгодная цена <span>от 5 BYN за 1 кг</span>
                                 </div>
-                                <form action="#" class="main__form">
+                                <form action="#" class="main__form" id="first">
                                     <input type="tel" placeholder="+375 (_ _) _ _ _-_ _-_ _" name="user_tel">
                                     <button>
                                         Оставить заявку
@@ -127,7 +146,7 @@
                                 <div class="slider__button slider__button-left" id="buttonLeft">
                                 </div>
                                 <div class="video__player">
-                                    <iframe id="iframeCarousel" style='border-radius: 9px' width="100%" height="100%" src="https://www.youtube.com/embed/VMO6rN_dTxk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe id="iframeCarousel" style='border-radius: 9px' width="100%" height="100%" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                                 <div class="slider__button slider__button-right" id="buttonRight">
                                 </div>
@@ -148,7 +167,7 @@
                         </form>
                         <div class="video__promo">
                             <div class="promo__img">
-                                <img src="img/promo__img.svg" alt="img">
+                                <img src="img/promo__img.png" alt="img">
                             </div>
                             <h3 class="promo__title">
                                 За первое полугодие <span>выручка</span> секонд хендов <span>выросла в 1,4 раза</span> по сравнению с тем же периодом прошлого года
@@ -208,18 +227,18 @@
                                     </div>
                                 </div>
                                 <p class="calc__block-choice block-choice__second">
-                                    Выберите среднюю<span> продажную цену </span>1 вещи
+                                    Выберите среднюю <span> продажную цену </span> одной вещи
                                 </p>
                                 <div class="calc__price">
                                     <div class="price__block">
                                         <div class="price__block-change" id="price__minus">
-                                            -
+                                            
                                         </div>
                                         <p class="price__text">
                                             10
                                         </p>
                                         <div class="price__block-change" id="price__plus">
-                                            +
+                                            
                                         </div>
                                     </div>
                                     <div class="price__text">

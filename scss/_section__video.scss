@@ -132,11 +132,23 @@
 .caroules__item{
     height: 96px;
     cursor: pointer;
-    border-radius: 9px;
+    position: relative;
 }
+
 .carousel__img{
     width: 95%;
     height: 100%;
+    opacity: 0.6;
+    position: relative;
+    transition: opacity 0.5s linear 0s;
+    &:hover{
+        transition: opacity 0.5s linear 0s;
+        opacity: 1;
+    }
+}
+.carousel__img.imgBorder{
+    opacity: 1;
+    transition: opacity 0.5s linear 0s;
 }
 .video__form {
     position: relative;

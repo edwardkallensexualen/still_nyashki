@@ -28,7 +28,7 @@ header::before{
 .header__logo {
     flex-basis: 340px;
     position: relative;
-    z-index: 3;
+    z-index: 6;
 }
 .header__burger {
     display: none;
@@ -43,7 +43,7 @@ header::before{
 }
 .menu__list {
     position: relative;
-    z-index: 3;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -124,7 +124,7 @@ header::before{
         border-radius: 50%;
         background: #FFFFFF;
         position: relative;
-        z-index: 3;
+        z-index: 6;
     }
     .header__burger::before,
     .header__burger::after{
@@ -170,6 +170,7 @@ header::before{
         position: fixed;
         top: -100%;
         left: 0;
+        z-index: 5;
         width: 100%;
         height: 100%;
         background: #F4F3EF;

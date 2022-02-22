@@ -14,6 +14,7 @@ function showMenu(e){
     } else{
         headerburger.classList.toggle('active');
         menuNav.classList.toggle('active');
+        document.body.classList.toggle('active-hidden');
     }
 }
 
@@ -71,7 +72,6 @@ xhr.onload = function (){
         let a = xhr.response;
         a = JSON.parse(a);
         arrDataProduct = a;
-        console.log(arrDataProduct)
         // функция showItem (на событие клика по конкретному item в списке)
         function showItem(e){
             let dataId = e.target.getAttribute('data_id');
@@ -149,27 +149,15 @@ function slider(){
     fetch('https://nomadbylife.pythonanywhere.com/api-auth/all_video/')
     .then(response => response.json())
     .then(allvideo => {
-        console.log(allvideo)
         let allVideoCount = 0;
         for(let i of allvideo){
             if(i.url[0] != undefined){
-                videoCarousel.innerHTML += `<div class="caroules__item" data-video="2">
-                <img src="https://nomadbylife.pythonanywhere.com/${i.url[0].image}" data-numberProduct='${i.number_product}' data-urlVideo='${i.url[0].url}' class="carousel__img" alt="" id='${i.id}' data-id='${allVideoCount}'">
+                videoCarousel.innerHTML += `<div class="caroules__item">
+                    <img src="https://nomadbylife.pythonanywhere.com/${i.url[0].image}" data-numberProduct='${i.number_product}' data-urlVideo='${i.url[0].url}' class="carousel__img" alt="" id='${i.id}' data-id='${allVideoCount}'">
                 </div>`;
             }
             allVideoCount++;
         }
-        function addEventImg(){
-            let carouselImg = document.querySelectorAll('.carousel__img');
-            for(let i of carouselImg){
-                i.addEventListener('click', (e) => {
-                    console.log('Кликнул на IMG');
-                    slideCurrent(e.target.id, e)
-                })
-            }
-        }
-
-        addEventImg();
 
         numberProductLink.addEventListener('click', setVideoLink);
 
@@ -184,13 +172,11 @@ function slider(){
                     itemsImg.forEach(item => item.getAttribute('data-id') != counter ? item.classList.remove('imgBorder') : item.classList.add('imgBorder'));
                     blockTitle.innerHTML = `Товар №${itemsImg[counter].getAttribute('data-numberproduct')}`;
                     
-
                     position = -itemWidth * counter;
                     setPosition(position);
                 }
             })
         }
-
 
 
         // карусель //
@@ -278,74 +264,61 @@ function slider(){
             btnNext.disabled = position <= - (itemCount - slidersToShow) * itemWidth;
         };
         // ----------------------------------- //
-
-
-
-
-
-        // let videoButtonLeft = document.querySelector('#buttonLeft');
-        //     videoButtonLeft.addEventListener('click', prevVideo);
-
-        // let videoButtonRight = document.querySelector('#buttonRight');
-        //     videoButtonRight.addEventListener('click', nextVideo);
-
-        // let arrVideo = document.querySelectorAll('.carousel__img');
-        //     iframeCarousel.src = arrVideo[0].getAttribute('data-urlVideo');
-        //     arrVideo[0].classList.add('imgBorder');
-        //     blockTitle.textContent = `Товар №${arrVideo[0].getAttribute('data-numberProduct')}`;
-
-        // function nextVideo(e){
-        //     if(e.target.id == 'next' || e.target.id == 'buttonRight'){
-        //         slideNext()
-        //     }
-        // }
-        
-        // function prevVideo(e){
-        //     if(e.target.id == 'prev' || e.target.id == 'buttonLeft'){
-        //         slidePrev()
-        //     }
-        // }
-
-        // function slideNext(){
-        //     if(slideIndex == arrVideo.length){
-        //         videoButtonRight.disabled = true;
-        //         videoButtonLeft.disabled = false;
-        //     } else{
-        //         slideShow(slideIndex += 1)
-        //     }
-        // }
-        // function slidePrev(){
-        //     if(slideIndex == 0){
-        //         videoButtonLeft.disabled = true;
-        //         videoButtonRight.disabled = false;
-        //     } else{
-        //         slideShow(slideIndex -= 1)
-        //     }
-        // }
-        // function slideCurrent(n){
-        //     slideShow(slideIndex = n)
-        // }
-        
-        // function slideShow(n, e){
-        //     // if(n > arrVideo.length){
-        //     //     slideIndex = 1
-        //     // }
-        //     // if(n < 1){
-        //     //     slideIndex = arrVideo.length
-        //     // }
-        //     iframeCarousel.src = arrVideo[n].getAttribute('data-urlVideo');
-        //     for(let i of arrVideo){
-        //         if(n != arrVideo.length){
-        //             if(i.id != n){
-        //                 i.classList.remove('imgBorder')
-        //             } else{
-        //                 blockTitle.textContent = `Товар №${i.getAttribute('data-numberProduct')}`;
-        //                 i.classList.add('imgBorder')
-        //             }
-        //         }
-        //     }
-        // }
     })
 }
 
 slider();
+
+let buttons = document.querySelectorAll('button');
+    for(let button of buttons){
+        if(!button.classList.contains('modal__button')){
+            button.addEventListener('click', validPhone);
+        }
+    }
+
+const popup = document.querySelector('.popup');
+const wrapper = document.querySelector('.wrapper');
+let formText;
+
+function validPhone(event) {
+    event.preventDefault();
+    var re = /^((80|\+375)?)(25|33|44|29)(\d{7})$/;
+    var myPhone = event.target.previousElementSibling.value; 
+    var valid = re.test(myPhone); 
+    if (valid){
+        popup.style.display = 'block';
+        wrapper.classList.add('popup');
+        wrapper.style.display = 'block';
+        document.body.classList.add('active-hidden');
+        let form = event.target.parentNode;
+        fetch('https://nomadbylife.pythonanywhere.com/contact/', {
+            method: 'POST',
+            body: new FormData(form),
+        }).then(response => {
+            console.log(response.status);
+        })
+        event.target.previousElementSibling.value = '';
+    } else{
+        let formTextRed = event.target.nextElementSibling;
+            formTextRed.innerHTML = 'Введите корректный номер в формате +375 (_ _) _ _ _-_ _-_ _';
+            formTextRed.classList.add('form__text-red');
+            formText = formTextRed;
+            event.target.previousElementSibling.value = '';
+    }
+    return formText
+}
+
+
+const modalCross = document.querySelector('.modal__cross');
+    modalCross.addEventListener('click', closeModalWindow);
+
+const modalButton = document.querySelector('.modal__button');
+    modalButton.addEventListener('click', closeModalWindow);
+
+function closeModalWindow(){
+    wrapper.classList.remove('popup');
+    popup.style.display = 'none';
+    document.body.classList.remove('active-hidden');
+    formText.innerHTML = 'Мы перезвоним вам в течение 15 минут, поделимся<br> опытом и ответим на все вопросы';
+    formText.classList.remove('form__text-red');
+}
