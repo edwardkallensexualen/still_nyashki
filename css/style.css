@@ -249,7 +249,7 @@ header::before {
     font-weight: 500;
     display: block;
     position: fixed;
-    top: -100%;
+    top: -1000px;
     left: 0;
     z-index: 5;
     width: 100%;
