@@ -3,9 +3,11 @@
   padding: 0 15px;
   margin: 0 auto;
 }
+
 .wrapper{
-  overflow: hidden;
+    overflow: hidden;
 }
+
 .active-hidden {
   overflow: hidden;
 }
@@ -61,7 +63,14 @@ header {
   left: 0;
   z-index: 2;
 }
-
+.header__instagram{
+    display: none;
+    background-image: url(../img/instagram.svg);
+    background-position: center;
+    height: 48px;
+    width: 100%;
+    background-repeat: no-repeat;
+}
 header::before {
   content: '';
   position: fixed;
@@ -88,6 +97,26 @@ header::before {
       flex-basis: 340px;
   position: relative;
   z-index: 6;
+}
+
+.logo {
+  display: block;
+  width: 100%;
+  background-image: url(../img/logo.svg);
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+  -webkit-transition: background-image 0.3s ease 0s;
+  transition: background-image 0.3s ease 0s;
+}
+
+.show-logo {
+  height: 78px;
+}
+
+.logo.show-logo {
+  background-size: contain;
+  background-image: url(../img/full_logo.svg);
 }
 
 .header__burger {
@@ -193,6 +222,10 @@ header::before {
         -ms-flex: 1 1 auto;
             flex: 1 1 auto;
   }
+  .show-logo {
+    width: 59px;
+    height: 64px;
+  }
   .header__burger {
     display: block;
     width: 40px;
@@ -244,22 +277,27 @@ header::before {
     -webkit-transform: scale(0);
             transform: scale(0);
   }
+  .header__menu.active .header__instagram{
+      display: block;
+  }
   .header__menu {
     font-size: 18px;
     font-weight: 500;
     display: block;
     position: fixed;
-    top: -1000px;
+    top: -2000px;
     left: 0;
     z-index: 5;
     width: 100%;
-    height: 100%;
+    height: calc(var(--vh, 1vh) * 100);
+    height: 100vh;
     background: #F4F3EF;
-    padding: 180px 0 40px 0;
+    padding: 140px 0 30px 0;
     -webkit-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s;
   }
   .header__menu.active {
+    transition: 0s;
     top: 0;
   }
   .menu__list {
@@ -308,6 +346,9 @@ header::before {
   }
   .header__contact p span {
     display: inline;
+  }
+  .header__contact-text{
+      margin-bottom: 15px;
   }
 }
 
@@ -691,7 +732,7 @@ main {
 
 @media (max-width: 992px) {
   .image__item-first {
-    top: 50%;
+    top: 52%;
     right: inherit;
     left: -85px;
     -webkit-transform: translateY(-50%);
@@ -710,7 +751,7 @@ main {
     min-width: 100%;
   }
   .section__main {
-    padding: 20px 0 24px 0;
+    padding: 35px 0 24px 0;
   }
   .info__title {
     max-width: 100%;
@@ -727,7 +768,7 @@ main {
   .image__item-first {
     width: 172px;
     height: 168px;
-    top: 42%;
+    top: 45%;
     left: -173px;
   }
   .info__item {
@@ -763,6 +804,9 @@ main {
     top: 3px;
     right: 4px;
     font-size: 14px;
+  }
+  .item__img{
+      margin-right: 10px;
   }
 }
 
@@ -2394,6 +2438,15 @@ footer {
   margin-bottom: 32px;
 }
 
+.instagram{
+    display: inline-block;
+    background-image: url(../img/instagram.svg);
+    background-repeat: no-repeat;
+    width: 48px;
+    background-size: contain;
+    height: 48px;
+}
+
 .footer__list-contacts li:nth-child(odd) {
   font-weight: normal;
   font-size: 16px;
@@ -2410,6 +2463,10 @@ footer {
   line-height: 120%;
   color: #FFFFFF;
   margin-bottom: 32px;
+}
+
+.footer__list-contacts .list__contacts-margin {
+  margin-bottom: 16px !important;
 }
 
 .footer__list-link {
@@ -2488,17 +2545,25 @@ footer {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
     margin-bottom: 32px;
   }
+
   .footer__list-contacts li:nth-child(odd) {
     margin-bottom: 8px;
   }
   .footer__list-contacts li:nth-child(even) {
     margin-bottom: 0;
   }
+  .instagram{
+    width: 40px;
+    height: 40px;
+}
 }
 
 @media (max-width: 768px) {
@@ -2541,6 +2606,9 @@ footer {
 }
 
 @media (max-width: 576px) {
+  .list__wrap .footer__list-contacts{
+      margin-right: 15px;
+  }
   .footer__title {
     font-size: 20px;
     margin-bottom: 8px;
@@ -2549,9 +2617,13 @@ footer {
     font-size: 14px;
     margin-bottom: 24px;
   }
+    .instagram{
+    width: 38px;
+    height: 38px;
+}
 }
 
-@media (max-width: 380px) {
+@media (max-width: 470px) {
   .list__wrap {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;

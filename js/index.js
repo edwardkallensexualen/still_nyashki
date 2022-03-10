@@ -8,16 +8,41 @@ let menuLink = document.querySelectorAll('.menu__link');
         i.addEventListener('click', showMenu);
     }
 
+
+const logoImg = document.querySelector('.logo');
+window.onscroll = function() {
+    let prevScrollpos = window.pageYOffset;
+        if(prevScrollpos > 0){
+            logoImg.style.height = '50px';
+            logoImg.classList.remove('show-logo');
+            if(window.innerWidth < 768){
+                logoImg.style.height = '38px';
+                logoImg.style.width = '120px';
+            }
+        } else{
+            logoImg.style.height = '78px';
+            logoImg.classList.add('show-logo');
+            if(window.innerWidth < 768){
+                logoImg.style.height = '64px';
+                logoImg.style.width = '59px';
+            }
+        }
+}
+
 function showMenu(e){
     if(e.target.className == 'active'){
         e.target.className.remove('active');
     } else{
         headerburger.classList.toggle('active');
         menuNav.classList.toggle('active');
-        document.body.classList.toggle('active-hidden');
+
+        if(window.innerWidth < 768){
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+            document.body.classList.toggle('active-hidden');
+        }
     }
 }
-
 
 // вся логика секции калькулятор //
 
@@ -72,6 +97,7 @@ xhr.onload = function (){
         let a = xhr.response;
         a = JSON.parse(a);
         arrDataProduct = a;
+        let arrDataProductNull = arrDataProduct[0];
         // функция showItem (на событие клика по конкретному item в списке)
         function showItem(e){
             let dataId = e.target.getAttribute('data_id');
@@ -88,7 +114,7 @@ xhr.onload = function (){
         }
         function setListProduct(){
             for(let i of arrDataProduct){
-                if(i.id == 1){
+                if(i.id == 1 || arrDataProductNull == i){
                     firstLi.setAttribute('data_id', `${i.id}`);
                     calcItemMass.innerHTML = `${i.massa} кг`;
                     calcItemCost.innerHTML = `${i.avg_price} BYN`;
@@ -281,6 +307,7 @@ const wrapper = document.querySelector('.wrapper');
 let formText;
 
 function validPhone(event) {
+    console.log(event.target.tagName == 'BUTTON')
     event.preventDefault();
     var re = /^((80|\+375)?)(25|33|44|29)(\d{7})$/;
     var myPhone = event.target.previousElementSibling.value; 
@@ -316,9 +343,10 @@ const modalButton = document.querySelector('.modal__button');
     modalButton.addEventListener('click', closeModalWindow);
 
 function closeModalWindow(){
+    console.log(111)
     wrapper.classList.remove('popup');
     popup.style.display = 'none';
     document.body.classList.remove('active-hidden');
     formText.innerHTML = 'Мы перезвоним вам в течение 15 минут, поделимся<br> опытом и ответим на все вопросы';
     formText.classList.remove('form__text-red');
- }
+}
